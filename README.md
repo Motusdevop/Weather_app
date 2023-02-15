@@ -1,2 +1,6 @@
-# App
-This app. Can login and register client.
+# Doors app
+This program can register and log in users.
+
+Technologies:
+PyQt5
+Sqlite3
