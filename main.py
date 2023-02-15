@@ -21,7 +21,6 @@ class Start(QWidget):
     def check(self):
         login = self.login_line.text()
         password = self.password_line.text()
-        self.label.setText(f'{login} : {password}')
         
 if __name__ == '__main__':
     app = QApplication(sys.argv)
