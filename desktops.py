@@ -8,8 +8,8 @@ class Start(QWidget):
         self.resize(500,300)
         self.label = QLabel("Enter login and password")
         self.final = QLabel("Wait")
-        self.user_line  = QLineEdit("User")
-        self.password_line = QLineEdit("Password")
+        self.user_line  = QLineEdit(placeholderText="User...")
+        self.password_line = QLineEdit(placeholderText="Password...")
         self.button = QPushButton("Confirm")
         self.button.clicked.connect(self.check)
 
