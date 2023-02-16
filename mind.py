@@ -17,28 +17,30 @@ def register(login, password):
 		if cursor.fetchone() == None:
 			cursor.execute("INSERT INTO users VALUES (?, ?)", [login, password])
 			db.commit()
+			return("Успешная регистрация", True)
 		else:
-			return "Такой пользователь уже есть"
+			return ("Такой пользователь уже есть", False)
 	except sqlite3.Error as e:
-		return f"Error {e}"
+		return (f"Error {e}", False)
 	finally:
 		cursor.close()
 		db.close()
+
 def login(login, password):
 	db = sqlite3.connect('users.db')
 	cursor = db.cursor()
 	try:
 		cursor.execute("SELECT login FROM users WHERE login = ?", [login])
 		if cursor.fetchone() == None:
-			return "Такого пользователя нету"
+			return ("Такого пользователя нету", False)
 		else:
 			cursor.execute("SELECT password FROM users WHERE login = ?", [login])
 			if cursor.fetchone()[0] == password:
-				return "Успешный вход"
+				return ("Успешный вход", True)
 			else:
-				return 'Не правильный пароль'
+				return ('Не правильный пароль', False)
 	except sqlite3.Error as e:
-		return f"Error {e}"
+		return (f"Error {e}", False)
 	finally:
 		cursor.close()
 		db.close()

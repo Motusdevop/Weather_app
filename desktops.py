@@ -2,12 +2,14 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import *
 import mind
 
+
 class Start(QWidget):
+
     def __init__(self):
         super().__init__()
         self.resize(500,300)
+        self.setWindowTitle("Sing up or Sing in")
         self.label = QLabel("Enter login and password")
-        self.final = QLabel("Wait")
         self.user_line  = QLineEdit(placeholderText="User...")
         self.password_line = QLineEdit(placeholderText="Password...")
         self.button = QPushButton("Confirm")
@@ -27,13 +29,27 @@ class Start(QWidget):
         lay.addWidget(self.register_radio)
         lay.addWidget(self.login_radio)
         lay.addWidget(self.button, alignment = Qt.AlignCenter)
-        lay.addWidget(self.final, alignment = Qt.AlignCenter)
 
     def check(self):
+        global correct
         mind.create()
+        correct = Correct()
+        correct.show()
         user = self.user_line.text()
         password = self.password_line.text()
         if self.button_group.checkedId() == 1:
-            self.final.setText(mind.register(user, password))
-        else:
-            self.final.setText(mind.login(user, password))
+            correct.label.setText(mind.register(user, password)[0])
+        elif self.button_group.checkedId() == 2:
+            correct.label.setText(mind.login(user, password)[0])
+
+
+class Correct(QWidget):
+
+    def __init__(self):
+        super().__init__()
+        self.resize(300,200)
+        self.setWindowTitle("Correct")
+        self.label = QLabel("...")
+        
+        lay = QVBoxLayout(self)
+        lay.addWidget(self.label, alignment = Qt.AlignCenter)
