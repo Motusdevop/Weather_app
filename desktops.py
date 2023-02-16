@@ -33,14 +33,13 @@ class Start(QWidget):
     def check(self):
         global correct
         mind.create()
-        correct = Correct()
-        correct.show()
         user = self.user_line.text()
         password = self.password_line.text()
         if self.button_group.checkedId() == 1:
             correct.label.setText(mind.register(user, password)[0])
         elif self.button_group.checkedId() == 2:
             correct.label.setText(mind.login(user, password)[0])
+        correct.show()
 
 
 class Correct(QWidget):
