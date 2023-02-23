@@ -31,15 +31,14 @@ class Start(QWidget):
         lay.addWidget(self.button, alignment = Qt.AlignCenter)
 
     def check(self):
-        global correct
         mind.create()
+        self.correct = Correct()
         user = self.user_line.text()
         password = self.password_line.text()
         if self.button_group.checkedId() == 1:
-            correct.label.setText(mind.register(user, password)[0])
+            self.correct.label.setText(mind.register(user, password)[0])
         elif self.button_group.checkedId() == 2:
-            correct.label.setText(mind.login(user, password)[0])
-        correct.show()
+            self.correct.label.setText(mind.login(user, password)[0])
 
 
 class Correct(QWidget):
@@ -50,5 +49,8 @@ class Correct(QWidget):
         self.setWindowTitle("Correct")
         self.label = QLabel("...")
         
+        
         lay = QVBoxLayout(self)
         lay.addWidget(self.label, alignment = Qt.AlignCenter)
+
+        self.show()
