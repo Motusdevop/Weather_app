@@ -35,6 +35,18 @@ class Start(QWidget):
         self.correct = Correct()
         user = self.user_line.text()
         password = self.password_line.text()
+
+        if user == "" or len(user) <= 3:
+            self.user_line.setStyleSheet("QLineEdit {background-color: #F08080}")
+            self.correct.label.setText("Your nickname must not be empty and be longer than 3 characters")
+            return None
+        
+        if password == "" or len(password) < 4:
+            self.password_line.setStyleSheet("QLineEdit {background-color: #F08080}")
+            self.correct.label.setText("Your password must not be empty and must be at least 4 characters long")
+            return None
+
+
         if self.button_group.checkedId() == 1:
             answer_list = mind.register(user, password)
             self.correct.label.setText(answer_list[0])
