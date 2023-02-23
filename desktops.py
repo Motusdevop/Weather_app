@@ -36,9 +36,20 @@ class Start(QWidget):
         user = self.user_line.text()
         password = self.password_line.text()
         if self.button_group.checkedId() == 1:
-            self.correct.label.setText(mind.register(user, password)[0])
+            answer_list = mind.register(user, password)
+            self.correct.label.setText(answer_list[0])
         elif self.button_group.checkedId() == 2:
-            self.correct.label.setText(mind.login(user, password)[0])
+            answer_list = mind.login(user, password)
+            self.correct.label.setText(answer_list[0])
+        
+        if answer_list[2]:
+            self.user_line.setStyleSheet("QLineEdit {background-color: #66CDAA}")
+        else:
+            self.user_line.setStyleSheet("QLineEdit {background-color: #F08080}")
+        if answer_list[3]:
+            self.password_line.setStyleSheet("QLineEdit {background-color: #66CDAA}")
+        else:
+            self.password_line.setStyleSheet("QLineEdit {background-color: #F08080}")
 
 
 class Correct(QWidget):
