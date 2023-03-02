@@ -1,4 +1,4 @@
-# Doors app
+# Weather app
 This program can register and log in users.
 
 Technologies:
