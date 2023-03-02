@@ -86,6 +86,7 @@ class Correct(QWidget):
     
     def Setting(self):
         self.resize(300,200)
+        self.move(500, 200)
         self.setWindowTitle("Correct")
 
     def InitUi(self):
@@ -112,17 +113,18 @@ class MainWin(QWidget):
 
     def Setting(self):
         self.resize(800,500)
+        self.move(900, 200)
         self.setWindowTitle("Light Tool")
     
     def InitUi(self):
         self.result = self.Weather()
         self.WeatherTitle = QLabel("Погода")
-        self.name = QLabel(self.result[0])
-        self.temp = QLabel(self.result[1])
-        self.temp_max = QLabel(self.result[2])
-        self.temp_min = QLabel(self.result[3])
-        self.humidity = QLabel(self.result[4])
-        self.description = QLabel(self.result[5])
+        self.name = QLabel("В населённом пункте: " + self.result[0])
+        self.temp = QLabel("температура: " + self.result[1])
+        self.temp_max = QLabel("минимальная температура: " + self.result[2])
+        self.temp_min = QLabel("максимальная температура: " + self.result[3])
+        self.humidity = QLabel("влажность воздуха: " + self.result[4])
+        self.description = QLabel("Сейчас: " + self.result[5])
 
         lay = QVBoxLayout(self)
         
