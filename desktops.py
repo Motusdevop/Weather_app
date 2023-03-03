@@ -149,10 +149,9 @@ class MainWin(QWidget):
         lay.addStretch(10)
     
     def setWeather(self):
-        self.update_win = Upd(self.login)
+        self.update_win = Upd(login=self.login, main=self)
     
     def update_weather(self):
-        self.login = login
         self.city = mind.EnterCity(self.login)
         self.result = weather.get_weather(self.city)
         
@@ -166,9 +165,10 @@ class MainWin(QWidget):
         
 
 class Upd(QWidget):
-    def __init__(self, login):
+    def __init__(self, login, main):
         super().__init__()
         self.login = login
+        self.main = main
         self.Setting()
         self.initUi()
         self.show()
