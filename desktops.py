@@ -1,5 +1,6 @@
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import *
+from PyQt5.QtGui import QFont
 import mind
 import weather
 
@@ -103,13 +104,10 @@ class MainWin(QWidget):
     def __init__(self, login):
         super().__init__()
         self.login = login
+        self.city = mind.EnterCity(self.login)
         self.Setting()
         self.InitUi()
         self.show()
-    
-    def Weather(self):
-        city = str(mind.EnterCity(self.login))
-        return weather.get_weather(city)
 
     def Setting(self):
         self.resize(800,500)
@@ -117,8 +115,10 @@ class MainWin(QWidget):
         self.setWindowTitle("Light Tool")
     
     def InitUi(self):
-        self.result = self.Weather()
+        self.result = weather.get_weather(self.city)
         self.WeatherTitle = QLabel("Погода")
+        self.WeatherTitle.setFont(QFont('Arial', 24))
+        self.WeatherTitle.setStyleSheet("QLabel {color: #6495ed}")
         self.name = QLabel("В населённом пункте: " + self.result[0])
         self.temp = QLabel("температура: " + self.result[1])
         self.temp_max = QLabel("минимальная температура: " + self.result[2])
@@ -126,13 +126,80 @@ class MainWin(QWidget):
         self.humidity = QLabel("влажность воздуха: " + self.result[4])
         self.description = QLabel("Сейчас: " + self.result[5])
 
+        self.btm_change = QPushButton("Изменить населённый пункт")
+        self.btm_change.clicked.connect(self.setWeather)
+        self.btm_update = QPushButton("Обновить данные")
+        self.btm_update.clicked.connect(self.update_weather)
+
         lay = QVBoxLayout(self)
+        hlay = QHBoxLayout(self)
+
+        hlay.addWidget(self.btm_change, alignment= Qt.AlignLeft)
+        hlay.addWidget(self.btm_update, alignment= Qt.AlignLeft)
+
         
-        lay.addWidget(self.WeatherTitle)
+        lay.addWidget(self.WeatherTitle, alignment=Qt.AlignCenter)
         lay.addWidget(self.name)
         lay.addWidget(self.temp)
         lay.addWidget(self.temp_max)
         lay.addWidget(self.temp_min)
         lay.addWidget(self.humidity)
         lay.addWidget(self.description)
+        lay.addLayout(hlay)
+        lay.addStretch(10)
+    
+    def setWeather(self):
+        self.update_win = Upd(self.login)
+    
+    def update_weather(self):
+        self.login = login
+        self.city = mind.EnterCity(self.login)
+        self.result = weather.get_weather(self.city)
+        
+        self.WeatherTitle.setText("Погода")
+        self.name.setText("В населённом пункте: " + self.result[0])
+        self.temp.setText("температура: " + self.result[1])
+        self.temp_max.setText("минимальная температура: " + self.result[2])
+        self.temp_min.setText("максимальная температура: " + self.result[3])
+        self.humidity.setText("влажность воздуха: " + self.result[4])
+        self.description.setText("Сейчас: " + self.result[5])
+        
+
+class Upd(QWidget):
+    def __init__(self, login):
+        super().__init__()
+        self.login = login
+        self.Setting()
+        self.initUi()
+        self.show()
+    
+    def Setting(self):
+        self.setWindowTitle("Update city")
+        self.resize(300, 120)
+    
+    def initUi(self):
+        self.title = QLabel("Введи город или оставь старый")
+        self.line = QLineEdit(placeholderText="Лондон...")
+        self.cancel = QPushButton("Оставить старый")
+        self.change = QPushButton("Потвердить")
+
+        self.cancel.setStyleSheet("QPushButton {color: #F08080}")
+        self.change.setStyleSheet("QPushButton {color: #DAA520}")
+        self.cancel.clicked.connect(self.hide)
+        self.change.clicked.connect(self.update)
+
+        lay = QVBoxLayout(self)
+        hlay = QHBoxLayout(self)
+        
+        hlay.addWidget(self.cancel, alignment= Qt.AlignLeft)
+        hlay.addWidget(self.change, alignment= Qt.AlignRight)
+
+        lay.addWidget(self.title, alignment= Qt.AlignCenter)
+        lay.addWidget(self.line, alignment= Qt.AlignCenter)
+        lay.addLayout(hlay)
+    
+    def update(self):
+        mind.SetCity(city=self.line.text(), login=self.login)
+        MainWin.update_weather()
+        self.hide()
 
