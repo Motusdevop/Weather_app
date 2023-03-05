@@ -203,4 +203,3 @@ class Upd(QWidget):
         mind.SetCity(city=self.line.text(), login=self.login)
         MainWin.win.update_weather()
         self.hide()
-
