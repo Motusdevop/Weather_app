@@ -103,6 +103,7 @@ class MainWin(QWidget):
 
     def __init__(self, login):
         super().__init__()
+        MainWin.win = self
         self.login = login
         self.city = mind.EnterCity(self.login)
         self.Setting()
@@ -183,8 +184,8 @@ class Upd(QWidget):
         self.cancel = QPushButton("Оставить старый")
         self.change = QPushButton("Потвердить")
 
-        self.cancel.setStyleSheet("QPushButton {color: #F08080}")
-        self.change.setStyleSheet("QPushButton {color: #DAA520}")
+        self.cancel.setStyleSheet("QPushButton {color: #F08080; border-radius: 8px;}")
+        self.change.setStyleSheet("QPushButton {color: #DAA520; border-radius: 8px;}")
         self.cancel.clicked.connect(self.hide)
         self.change.clicked.connect(self.update)
 
@@ -200,6 +201,6 @@ class Upd(QWidget):
     
     def update(self):
         mind.SetCity(city=self.line.text(), login=self.login)
-        MainWin.update_weather()
+        MainWin.win.update_weather()
         self.hide()
 
