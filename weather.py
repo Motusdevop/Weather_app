@@ -1,6 +1,7 @@
 def get_weather(city) -> tuple:
     from config import TOKEN
     import requests
+    #from pprint import pprint
     try:
         req = requests.get(
             f"https://api.openweathermap.org/data/2.5/weather?q={city}&appid={TOKEN}&units=metric&lang=ru"
@@ -8,14 +9,15 @@ def get_weather(city) -> tuple:
         data = req.json()
 
         if data['cod'] == '404':
-            return ('Город не найден', 'None', 'None', 'None', 'None', 'None')
+            return ('Город не найден', 'None', 'None', 'None', 'None', 'None', "source/10d.png")
 
         city = data["name"]
         temp = data["main"]["temp"]
         temp_max = data["main"]["temp_max"]
         temp_min = data["main"]["temp_min"]
-        humidity = data["main"]["humidity"]
+        humidity = str(data["main"]["humidity"]) + "%"
         description = data["weather"][0]["description"]
+        icon = "source/" + data['weather'][0]['icon'] + ".png"
 
         result = (
             city,
@@ -23,7 +25,8 @@ def get_weather(city) -> tuple:
             temp_max,
             temp_min,
             humidity,
-            description
+            description,
+            icon
         )
         result = tuple(map(str, result))
 

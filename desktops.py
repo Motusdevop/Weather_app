@@ -1,6 +1,7 @@
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import *
-from PyQt5.QtGui import QFont
+from PyQt5.QtGui import QFont, QPixmap
+
 import mind
 import weather
 
@@ -101,7 +102,7 @@ class Correct(QWidget):
 
 class MainWin(QWidget):
 
-    def __init__(self, login):
+    def __init__(self, login: str):
         super().__init__()
         MainWin.win = self
         self.login = login
@@ -117,6 +118,8 @@ class MainWin(QWidget):
     
     def InitUi(self):
         self.result = weather.get_weather(self.city)
+        self.icon = QPixmap(self.result[6])
+
         self.WeatherTitle = QLabel("Погода")
         self.WeatherTitle.setFont(QFont('Arial', 24))
         self.WeatherTitle.setStyleSheet("QLabel {color: #6495ed}")
@@ -126,6 +129,13 @@ class MainWin(QWidget):
         self.temp_min = QLabel("максимальная температура: " + self.result[3])
         self.humidity = QLabel("влажность воздуха: " + self.result[4])
         self.description = QLabel("Сейчас: " + self.result[5])
+
+        
+        self.label_img = QLabel(self)
+        self.label_img.setPixmap(self.icon)
+        self.label_img.resize(self.icon.width(), self.icon.height())
+        self.label_img.move(350, 70)
+        
 
         self.btm_change = QPushButton("Изменить населённый пункт")
         self.btm_change.clicked.connect(self.setWeather)
@@ -150,7 +160,7 @@ class MainWin(QWidget):
         lay.addStretch(10)
     
     def setWeather(self):
-        self.update_win = Upd(login=self.login, main=self)
+        self.update_win = Upd(login=self.login)
     
     def update_weather(self):
         self.city = mind.EnterCity(self.login)
@@ -164,12 +174,14 @@ class MainWin(QWidget):
         self.humidity.setText("влажность воздуха: " + self.result[4])
         self.description.setText("Сейчас: " + self.result[5])
         
+        self.icon = QPixmap(self.result[6])
+        self.label_img.setPixmap(self.icon)
+        
 
 class Upd(QWidget):
-    def __init__(self, login, main):
+    def __init__(self, login: str):
         super().__init__()
         self.login = login
-        self.main = main
         self.Setting()
         self.initUi()
         self.show()
