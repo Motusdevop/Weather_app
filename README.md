@@ -7,4 +7,3 @@ This program can show the weather of any city that you can always change, and al
 >BeautifulSoup
 >request
 >openweathermap_api
-
