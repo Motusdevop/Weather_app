@@ -32,12 +32,12 @@ class Start(QWidget):
         self.button_group.addButton(self.login_radio, id=2)
         
         lay = QVBoxLayout(self)
-        lay.addWidget(self.label, alignment = Qt.AlignCenter)
-        lay.addWidget(self.user_line, alignment = Qt.AlignCenter)
-        lay.addWidget(self.password_line, alignment = Qt.AlignCenter)
+        lay.addWidget(self.label, alignment=Qt.AlignCenter)
+        lay.addWidget(self.user_line, alignment=Qt.AlignCenter)
+        lay.addWidget(self.password_line, alignment=Qt.AlignCenter)
         lay.addWidget(self.register_radio)
         lay.addWidget(self.login_radio)
-        lay.addWidget(self.button, alignment = Qt.AlignCenter)
+        lay.addWidget(self.button, alignment=Qt.AlignCenter)
 
     def check(self):
         mind.create()
@@ -96,8 +96,8 @@ class Correct(QWidget):
         self.button.clicked.connect(self.hide)
 
         lay = QVBoxLayout(self)
-        lay.addWidget(self.label, alignment = Qt.AlignCenter)
-        lay.addWidget(self.button, alignment = Qt.AlignCenter)
+        lay.addWidget(self.label, alignment=Qt.AlignCenter)
+        lay.addWidget(self.button, alignment=Qt.AlignCenter)
 
 class MainWin(QWidget):
 
@@ -135,8 +135,8 @@ class MainWin(QWidget):
         lay = QVBoxLayout(self)
         hlay = QHBoxLayout(self)
 
-        hlay.addWidget(self.btm_change, alignment= Qt.AlignLeft)
-        hlay.addWidget(self.btm_update, alignment= Qt.AlignLeft)
+        hlay.addWidget(self.btm_change, alignment=Qt.AlignLeft)
+        hlay.addWidget(self.btm_update, alignment=Qt.AlignLeft)
 
         
         lay.addWidget(self.WeatherTitle, alignment=Qt.AlignCenter)
@@ -184,8 +184,8 @@ class Upd(QWidget):
         self.cancel = QPushButton("Оставить старый")
         self.change = QPushButton("Потвердить")
 
-        self.cancel.setStyleSheet("QPushButton {color: #F08080; border-radius: 8px;}")
-        self.change.setStyleSheet("QPushButton {color: #DAA520; border-radius: 8px;}")
+        self.cancel.setStyleSheet("QPushButton {color: #F08080; border-radius: 8px; border: 2px solid #4CAF50;margin: 4px 2px;}")
+        self.change.setStyleSheet("QPushButton {color: #DAA520; border-radius: 8px; border: 2px solid #4CAF50;margin: 4px 2px;}")
         self.cancel.clicked.connect(self.hide)
         self.change.clicked.connect(self.update)
 
