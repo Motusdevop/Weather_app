@@ -9,7 +9,7 @@ def get_weather(city) -> tuple:
         data = req.json()
 
         if data['cod'] == '404':
-            return ('Город не найден', 'None', 'None', 'None', 'None', 'None', "source/10d.png")
+            return ('Город не найден', 'None', 'None', 'None', 'None', 'None', "source/01d.png")
 
         city = data["name"]
         temp = data["main"]["temp"]

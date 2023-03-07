@@ -4,6 +4,7 @@ from PyQt5.QtGui import QFont, QPixmap
 
 import mind
 import weather
+import news
 
 
 class Start(QWidget):
@@ -19,10 +20,13 @@ class Start(QWidget):
         self.setWindowTitle("Sing up or Sing in")
     
     def initUi(self):
+        with open("style/button.stylesheet") as f:
+            self.button_style = f.read()
         self.label = QLabel("Enter login and password")
         self.user_line  = QLineEdit(placeholderText="User...")
         self.password_line = QLineEdit(placeholderText="Password...")
         self.button = QPushButton("Confirm")
+        self.button.setStyleSheet(self.button_style)
         self.button.clicked.connect(self.check)
 
         self.register_radio = QRadioButton("Register")
@@ -92,9 +96,13 @@ class Correct(QWidget):
         self.setWindowTitle("Correct")
 
     def InitUi(self):
+        with open("style/button.stylesheet") as f:
+            self.button_style = f.read()
         self.label = QLabel("...")
         self.button = QPushButton("OK")
         self.button.clicked.connect(self.hide)
+
+        self.button.setStyleSheet(self.button_style)
 
         lay = QVBoxLayout(self)
         lay.addWidget(self.label, alignment=Qt.AlignCenter)
@@ -117,11 +125,13 @@ class MainWin(QWidget):
         self.setWindowTitle("Light Tool")
     
     def InitUi(self):
+        with open("style/button.stylesheet") as f:
+            self.button_style = f.read()
         self.result = weather.get_weather(self.city)
         self.icon = QPixmap(self.result[6])
 
         self.WeatherTitle = QLabel("Погода")
-        self.WeatherTitle.setFont(QFont('Arial', 24))
+        self.WeatherTitle.setFont(QFont('Times New Roman', 24))
         self.WeatherTitle.setStyleSheet("QLabel {color: #6495ed}")
         self.name = QLabel("В населённом пункте: " + self.result[0])
         self.temp = QLabel("температура: " + self.result[1])
@@ -129,6 +139,16 @@ class MainWin(QWidget):
         self.temp_min = QLabel("максимальная температура: " + self.result[3])
         self.humidity = QLabel("влажность воздуха: " + self.result[4])
         self.description = QLabel("Сейчас: " + self.result[5])
+
+        self.news = news.get()
+        self.world_title = QLabel("Последняя новость в разделе [В мире]:")
+        self.world_title.setFont(QFont('Times New Roman', 24))
+        self.world_title.setStyleSheet("QLabel {color: #24a319}")
+        self.news_title = QLabel(self.news["title"])
+        self.news_title.setFont(QFont('Times New Roman', 24))
+        self.news_time = QLabel("Время публикации: " + self.news["time"])
+        self.news_link = QLabel(f'<a href="{self.news["link"]}"> Подробнее</a>' + " Источник 'РИА Новости'")
+        self.news_link.setOpenExternalLinks(True)
 
         
         self.label_img = QLabel(self)
@@ -142,11 +162,15 @@ class MainWin(QWidget):
         self.btm_update = QPushButton("Обновить данные")
         self.btm_update.clicked.connect(self.update_weather)
 
+        self.btm_change.setStyleSheet(self.button_style)
+        self.btm_update.setStyleSheet(self.button_style)
+
         lay = QVBoxLayout(self)
         hlay = QHBoxLayout(self)
 
-        hlay.addWidget(self.btm_change, alignment=Qt.AlignLeft)
-        hlay.addWidget(self.btm_update, alignment=Qt.AlignLeft)
+        hlay.addWidget(self.btm_change)
+        hlay.addWidget(self.btm_update)
+        hlay.addStretch(7)
 
         
         lay.addWidget(self.WeatherTitle, alignment=Qt.AlignCenter)
@@ -157,7 +181,10 @@ class MainWin(QWidget):
         lay.addWidget(self.humidity)
         lay.addWidget(self.description)
         lay.addLayout(hlay)
-        lay.addStretch(10)
+        lay.addWidget(self.world_title, alignment=Qt.AlignCenter)
+        lay.addWidget(self.news_title)
+        lay.addWidget(self.news_time)
+        lay.addWidget(self.news_link)
     
     def setWeather(self):
         self.update_win = Upd(login=self.login)
@@ -191,21 +218,23 @@ class Upd(QWidget):
         self.resize(300, 120)
     
     def initUi(self):
+        with open("style/button.stylesheet") as f:
+            self.button_style = f.read()
         self.title = QLabel("Введи город или оставь старый")
         self.line = QLineEdit(placeholderText="Лондон...")
-        self.cancel = QPushButton("Оставить старый")
-        self.change = QPushButton("Потвердить")
+        self.btm_cancel = QPushButton("Оставить старый")
+        self.btm_change = QPushButton("Потвердить")
 
-        self.cancel.setStyleSheet("QPushButton {color: #F08080; border-radius: 8px; border: 2px solid #4CAF50;margin: 4px 2px;}")
-        self.change.setStyleSheet("QPushButton {color: #DAA520; border-radius: 8px; border: 2px solid #4CAF50;margin: 4px 2px;}")
-        self.cancel.clicked.connect(self.hide)
-        self.change.clicked.connect(self.update)
+        self.btm_cancel.setStyleSheet(self.button_style)
+        self.btm_change.setStyleSheet(self.button_style)
+        self.btm_cancel.clicked.connect(self.hide)
+        self.btm_change.clicked.connect(self.update)
 
         lay = QVBoxLayout(self)
         hlay = QHBoxLayout(self)
         
-        hlay.addWidget(self.cancel, alignment= Qt.AlignLeft)
-        hlay.addWidget(self.change, alignment= Qt.AlignRight)
+        hlay.addWidget(self.btm_cancel, alignment= Qt.AlignLeft)
+        hlay.addWidget(self.btm_change, alignment= Qt.AlignRight)
 
         lay.addWidget(self.title, alignment= Qt.AlignCenter)
         lay.addWidget(self.line, alignment= Qt.AlignCenter)
