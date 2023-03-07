@@ -1,5 +1,5 @@
 # Weather app
-![Settings Window](https://raw.github.com/ryanmaxwell/iArrived/master/Screenshots/Settings.png)
+![Settings Window](https://raw.github.com/Motusdevop/App)
 This program can register and log in users.
 
 Technologies:
