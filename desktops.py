@@ -135,8 +135,8 @@ class MainWin(QWidget):
         self.WeatherTitle.setStyleSheet("QLabel {color: #6495ed}")
         self.name = QLabel("В населённом пункте: " + self.result[0])
         self.temp = QLabel("температура: " + self.result[1])
-        self.temp_max = QLabel("минимальная температура: " + self.result[2])
-        self.temp_min = QLabel("максимальная температура: " + self.result[3])
+        self.temp_max = QLabel("максимальная температура: " + self.result[2])
+        self.temp_min = QLabel("минимальная температура: " + self.result[3])
         self.humidity = QLabel("влажность воздуха: " + self.result[4])
         self.description = QLabel("Сейчас: " + self.result[5])
 
@@ -196,13 +196,18 @@ class MainWin(QWidget):
         self.WeatherTitle.setText("Погода")
         self.name.setText("В населённом пункте: " + self.result[0])
         self.temp.setText("температура: " + self.result[1])
-        self.temp_max.setText("минимальная температура: " + self.result[2])
-        self.temp_min.setText("максимальная температура: " + self.result[3])
+        self.temp_max.setText("максимальная температура:" + self.result[2])
+        self.temp_min.setText("минимальная температура:" + self.result[3])
         self.humidity.setText("влажность воздуха: " + self.result[4])
         self.description.setText("Сейчас: " + self.result[5])
         
         self.icon = QPixmap(self.result[6])
         self.label_img.setPixmap(self.icon)
+
+        self.news = news.get()
+        self.news_title.setText(self.news["title"])
+        self.news_time.setText("Время публикации: " + self.news["time"])
+        self.news_link.setText(f'<a href="{self.news["link"]}"> Подробнее</a>' + " Источник 'РИА Новости'")
         
 
 class Upd(QWidget):
