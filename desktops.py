@@ -11,6 +11,8 @@ class Start(QWidget):
 
     def __init__(self):
         super().__init__()
+        with open("style/Start.stylesheet") as f:
+            self.setStyleSheet(f.read())
         self.Setting()
         self.initUi()
         self.show()
@@ -20,13 +22,10 @@ class Start(QWidget):
         self.setWindowTitle("Sing up or Sing in")
     
     def initUi(self):
-        with open("style/button.stylesheet") as f:
-            self.button_style = f.read()
         self.label = QLabel("Enter login and password")
         self.user_line  = QLineEdit(placeholderText="User...")
         self.password_line = QLineEdit(placeholderText="Password...")
         self.button = QPushButton("Confirm")
-        self.button.setStyleSheet(self.button_style)
         self.button.clicked.connect(self.check)
 
         self.register_radio = QRadioButton("Register")
@@ -86,6 +85,8 @@ class Correct(QWidget):
 
     def __init__(self):
         super().__init__()
+        with open("style/Correct.stylesheet") as f:
+            self.setStyleSheet(f.read())
         self.Setting()
         self.InitUi()
         self.show()
@@ -96,13 +97,9 @@ class Correct(QWidget):
         self.setWindowTitle("Correct")
 
     def InitUi(self):
-        with open("style/button.stylesheet") as f:
-            self.button_style = f.read()
         self.label = QLabel("...")
         self.button = QPushButton("OK")
         self.button.clicked.connect(self.hide)
-
-        self.button.setStyleSheet(self.button_style)
 
         lay = QVBoxLayout(self)
         lay.addWidget(self.label, alignment=Qt.AlignCenter)
@@ -113,6 +110,8 @@ class MainWin(QWidget):
     def __init__(self, login: str):
         super().__init__()
         MainWin.win = self
+        with open("style/Main.stylesheet") as f:
+            MainWin.win.setStyleSheet(f.read())
         self.login = login
         self.city = mind.EnterCity(self.login)
         self.Setting()
@@ -125,8 +124,6 @@ class MainWin(QWidget):
         self.setWindowTitle("Light Tool")
     
     def InitUi(self):
-        with open("style/button.stylesheet") as f:
-            self.button_style = f.read()
         self.result = weather.get_weather(self.city)
         self.icon = QPixmap(self.result[6])
 
@@ -145,7 +142,7 @@ class MainWin(QWidget):
         self.world_title.setFont(QFont('Times New Roman', 24))
         self.world_title.setStyleSheet("QLabel {color: #24a319}")
         self.news_title = QLabel(self.news["title"])
-        self.news_title.setFont(QFont('Times New Roman', 24))
+        self.news_title.setFont(QFont('Times New Roman', 18))
         self.news_time = QLabel("Время публикации: " + self.news["time"])
         self.news_link = QLabel(f'<a href="{self.news["link"]}"> Подробнее</a>' + " Источник 'РИА Новости'")
         self.news_link.setOpenExternalLinks(True)
@@ -153,17 +150,13 @@ class MainWin(QWidget):
         
         self.label_img = QLabel(self)
         self.label_img.setPixmap(self.icon)
-        self.label_img.resize(self.icon.width(), self.icon.height())
-        self.label_img.move(350, 70)
+        self.label_img.resize(100, 100)
         
 
         self.btm_change = QPushButton("Изменить населённый пункт")
         self.btm_change.clicked.connect(self.setWeather)
         self.btm_update = QPushButton("Обновить данные")
         self.btm_update.clicked.connect(self.update_weather)
-
-        self.btm_change.setStyleSheet(self.button_style)
-        self.btm_update.setStyleSheet(self.button_style)
 
         lay = QVBoxLayout(self)
         hlay = QHBoxLayout(self)
@@ -174,6 +167,7 @@ class MainWin(QWidget):
 
         
         lay.addWidget(self.WeatherTitle, alignment=Qt.AlignCenter)
+        lay.addWidget(self.label_img)
         lay.addWidget(self.name)
         lay.addWidget(self.temp)
         lay.addWidget(self.temp_max)
@@ -213,6 +207,8 @@ class MainWin(QWidget):
 class Upd(QWidget):
     def __init__(self, login: str):
         super().__init__()
+        with open("style/Upd.stylesheet") as f:
+            self.setStyleSheet(f.read())
         self.login = login
         self.Setting()
         self.initUi()

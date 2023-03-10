@@ -1,0 +1,27 @@
+QWidget
+{
+    background-color: #a8e9ff;
+}
+
+a:link
+{
+    color: gray;
+}
+
+QPushButton
+{
+  background-color: #FFFFFF;
+  border: 1px solid #222222;
+  border-radius: 8px;
+  color: #222222;
+  margin: 0;
+  outline: none;
+  padding: 7px 7px;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+}
+QPushButton:pressed
+{
+    background-color: gray;
+}
