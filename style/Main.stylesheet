@@ -1,6 +1,6 @@
 QWidget
 {
-    background-color: #a8e9ff;
+    background-color: #DEF7FE;
 }
 
 a:link

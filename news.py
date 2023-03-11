@@ -1,6 +1,8 @@
 import requests
 
 from bs4 import BeautifulSoup
+
+
 def get() -> dict:
     req = requests.get("https://ria.ru/world/")
     scr = req.text

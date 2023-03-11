@@ -128,7 +128,7 @@ class MainWin(QWidget):
         self.icon = QPixmap(self.result[6])
 
         self.WeatherTitle = QLabel("Погода")
-        self.WeatherTitle.setFont(QFont('Times New Roman', 24))
+        self.WeatherTitle.setFont(QFont('Geneva', 24))
         self.WeatherTitle.setStyleSheet("QLabel {color: #6495ed}")
         self.name = QLabel("В населённом пункте: " + self.result[0])
         self.temp = QLabel("температура: " + self.result[1])
@@ -139,10 +139,10 @@ class MainWin(QWidget):
 
         self.news = news.get()
         self.world_title = QLabel("Последняя новость в разделе [В мире]:")
-        self.world_title.setFont(QFont('Times New Roman', 24))
+        self.world_title.setFont(QFont('Geneva', 24))
         self.world_title.setStyleSheet("QLabel {color: #24a319}")
         self.news_title = QLabel(self.news["title"])
-        self.news_title.setFont(QFont('Times New Roman', 18))
+        self.news_title.setFont(QFont('', 18))
         self.news_time = QLabel("Время публикации: " + self.news["time"])
         self.news_link = QLabel(f'<a href="{self.news["link"]}"> Подробнее</a>' + " Источник 'РИА Новости'")
         self.news_link.setOpenExternalLinks(True)
@@ -219,15 +219,11 @@ class Upd(QWidget):
         self.resize(300, 120)
     
     def initUi(self):
-        with open("style/button.stylesheet") as f:
-            self.button_style = f.read()
         self.title = QLabel("Введи город или оставь старый")
         self.line = QLineEdit(placeholderText="Лондон...")
         self.btm_cancel = QPushButton("Оставить старый")
         self.btm_change = QPushButton("Потвердить")
 
-        self.btm_cancel.setStyleSheet(self.button_style)
-        self.btm_change.setStyleSheet(self.button_style)
         self.btm_cancel.clicked.connect(self.hide)
         self.btm_change.clicked.connect(self.update)
 
