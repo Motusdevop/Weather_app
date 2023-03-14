@@ -1,6 +1,11 @@
 QWidget
 {
-  background-color: #B5F2EA;
+  background-color: #DEF7FE;
+}
+
+QLineEdit
+{
+    background-color: white;
 }
 
 QPushButton

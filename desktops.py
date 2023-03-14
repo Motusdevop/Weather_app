@@ -34,6 +34,8 @@ class Start(QWidget):
         self.button_group = QButtonGroup()
         self.button_group.addButton(self.register_radio, id=1)
         self.button_group.addButton(self.login_radio, id=2)
+        self.Guide = QLabel('<a href="guide.html" style="color: #C8C8C8"> Guide</a>')
+        self.Guide.setOpenExternalLinks(True)
         
         lay = QVBoxLayout(self)
         lay.addWidget(self.label, alignment=Qt.AlignCenter)
@@ -42,6 +44,7 @@ class Start(QWidget):
         lay.addWidget(self.register_radio)
         lay.addWidget(self.login_radio)
         lay.addWidget(self.button, alignment=Qt.AlignCenter)
+        lay.addWidget(self.Guide)
 
     def check(self):
         mind.create()
