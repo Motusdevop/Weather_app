@@ -1,5 +1,5 @@
 import sys
-import desktops
+from Widgets import desktops
 from PyQt5.QtWidgets import QApplication
 from PyQt5.QtGui import QIcon
     
