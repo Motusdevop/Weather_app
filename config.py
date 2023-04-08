@@ -1,1 +1,1 @@
-TOKEN = "" #openweather map Token
+TOKEN = "dc9e4e3d96fc96bc8dee15ab51e81eb9" #openweather map Token

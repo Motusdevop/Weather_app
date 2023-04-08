@@ -2,9 +2,7 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import QFont, QPixmap
 
-import mind
-import weather
-import news
+from mind import db_logic, news, weather
 
 
 class Start(QWidget):
@@ -47,7 +45,7 @@ class Start(QWidget):
         lay.addWidget(self.Guide)
 
     def check(self):
-        mind.create()
+        db_logic.create()
         self.correct = Correct()
         user = self.user_line.text()
         password = self.password_line.text()
@@ -64,10 +62,10 @@ class Start(QWidget):
 
 
         if self.button_group.checkedId() == 1:
-            answer_list = mind.register(user, password)
+            answer_list = db_logic.register(user, password)
             self.correct.label.setText(answer_list[0])
         elif self.button_group.checkedId() == 2:
-            answer_list = mind.login(user, password)
+            answer_list = db_logic.login(user, password)
             self.correct.label.setText(answer_list[0])
         
         if answer_list[1]:
@@ -116,7 +114,7 @@ class MainWin(QWidget):
         with open("style/Main.stylesheet") as f:
             MainWin.win.setStyleSheet(f.read())
         self.login = login
-        self.city = mind.EnterCity(self.login)
+        self.city = db_logic.EnterCity(self.login)
         self.Setting()
         self.InitUi()
         self.show()
@@ -187,7 +185,7 @@ class MainWin(QWidget):
         self.update_win = Upd(login=self.login)
     
     def update_weather(self):
-        self.city = mind.EnterCity(self.login)
+        self.city = db_logic.EnterCity(self.login)
         self.result = weather.get_weather(self.city)
         
         self.WeatherTitle.setText("Погода")
@@ -241,6 +239,6 @@ class Upd(QWidget):
         lay.addLayout(hlay)
     
     def update(self):
-        mind.SetCity(city=self.line.text(), login=self.login)
+        db_logic.SetCity(city=self.line.text(), login=self.login)
         MainWin.win.update_weather()
         self.hide()
